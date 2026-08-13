@@ -62,6 +62,13 @@ int main(int argc, char *argv[])
 
    splitter->setSizes({220, 760, 280});
 
+   splitter->setChildrenCollapsible(false);
+   splitter->setHandleWidth(2);
+
+   browserPanel->setMinimumWidth(180);
+   workspacePanel->setMinimumWidth(400);
+   inspectorPanel->setMinimumWidth(220);
+
    layout->addWidget(splitter);
 
     // ========================================================
