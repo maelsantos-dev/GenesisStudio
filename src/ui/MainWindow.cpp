@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QFrame>
 #include <QSplitter>
+#include <QDial> 
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -117,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent)
     signalCanvas->setMinimumHeight(160);
 
     // ============================================================
-    // AMP VISUAL AREA
+    // AMP VISUAL AREA / ÁREA VISUAL DO AMPLIFICADOR
     // ============================================================
 
     QFrame *ampPanel =
@@ -132,12 +133,70 @@ MainWindow::MainWindow(QWidget *parent)
     ampLayout->setContentsMargins(20, 12, 20, 12);
     ampLayout->setSpacing(0);
 
-    QLabel *ampImage = new QLabel("AMP");
-    ampImage->setObjectName("ampImage");
-    ampImage->setAlignment(Qt::AlignCenter);
-    ampImage->setMinimumHeight(260);
+    // ==============================================================================
+    // AMP VISUAL and AMP PARAMETER OF AMP / VISUAL E CONTROLE DE PARÂMENTROS DO AMP
+    // ==============================================================================
+    
+    QFrame *ampVisual = new QFrame(ampPanel);
+    ampVisual->setObjectName("ampVisual");
+    
+    QVBoxLayout *ampVisualLayout = new QVBoxLayout(ampVisual);
+    ampVisualLayout->setContentsMargins(24, 12, 24, 12);
+    ampVisualLayout->setSpacing(8);
 
-    ampLayout->addWidget(ampImage);
+    // Nome do Amplificador
+    QLabel *ampName = new QLabel("GENESIS LEAD 100");
+    ampName->setObjectName("ampName");
+    ampName->setAlignment(Qt::AlignCenter);
+
+    ampVisualLayout->addWidget(ampName);
+
+    // Controles
+    QHBoxLayout *ampControls = new QHBoxLayout();
+    ampControls->setSpacing(24);
+
+    QStringList controlNames = {
+        "GAIN",
+        "BASS",
+        "MID",
+        "TREBLE",
+        "PRESENCE",
+        "MASTER"
+    };
+
+    for (const QString &name : controlNames)
+    {
+        QVBoxLayout *controlLayout = new QVBoxLayout();
+        controlLayout->setSpacing(4);
+
+        QLabel *label = new QLabel(name);
+        label->setAlignment(Qt::AlignCenter);
+
+        QDial *dial = new QDial();
+        dial->setRange(0, 100);
+        dial->setValue(50);
+        dial->setNotchesVisible(false);
+        dial->setFixedSize(52, 52);
+
+        QLabel *value = new QLabel("5.0");
+        value->setAlignment(Qt::AlignCenter);
+
+        connect(dial, &QDial::valueChanged, value,
+                [value](int v)
+                {
+                    value->setText(QString::number(v / 10.0, 'f', 1));
+                });
+
+        controlLayout->addWidget(label);
+        controlLayout->addWidget(dial, 0, Qt::AlignCenter);
+        controlLayout->addWidget(value);
+
+        ampControls->addLayout(controlLayout);
+    }
+
+    ampVisualLayout->addLayout(ampControls);
+
+    ampLayout->addWidget(ampVisual);
 
     // ============================================================
     // WORKSPACE LAYOUT
@@ -230,6 +289,45 @@ MainWindow::MainWindow(QWidget *parent)
             border-radius: 4px;
         }
 
+        #ampImage {
+            background-color: #202338;
+            color: #6e69ed;
+            border: 1px solid #30343b;
+            border-radius: 3px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #ampVisual {
+            background-color: #17191d;
+            border: 1px solid #30343b;
+            border-radius: 4px;
+        }
+
+        #ampName {
+            color: #eeeeee;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        #ampVisual QLabel {
+            color: #aeb4bd;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        #ampVisual QDial {
+            background-color: #19191d;
+            border: 2px solid #30343b;
+            border-radius: 26px;
+            padding: 4px;
+        }
+            
+        #ampVisual QDial:hover {
+            border: 2px solid #6e69ed;
+        }
+
         #inspectorPanel {
             background-color: #1c1f24;
             border-left: 1px solid #30343b;
@@ -240,5 +338,6 @@ MainWindow::MainWindow(QWidget *parent)
             font-size: 12px;
             font-weight: bold;
         }
+
     )");
 }
