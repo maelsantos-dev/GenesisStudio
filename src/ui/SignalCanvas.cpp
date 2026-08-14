@@ -22,7 +22,7 @@ void SignalCanvas::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
-    const int reservedBotton = 390;
+    const int reservedBotton = 160;
     const int dividerY = height() - reservedBotton;
 
     painter.setPen(QColor("#343942"));

@@ -80,13 +80,15 @@ void ModuleWidget::mousePressEvent(QMouseEvent *event)
                 int minX = 0;
                 int minY = 0;
 
-                int maxX = canvas->width() - width();
+                // Garante que o limite nunca fique negativo
+                int maxX = qMax(0, canvas->width() - width());
+                int maxY = qMax(0, canvas->height() - height());
 
-                const int reservedBotton = 390;
-                int maxY = canvas->height() - height() - reservedBotton;
-
+                // Mantém o módulo dentro do Signal Canvas
                 newPos.setX(qBound(minX, newPos.x(), maxX));
                 newPos.setY(qBound(minY, newPos.y(), maxY));
+
+                
             }
 
             move(newPos);

@@ -97,11 +97,47 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *workspaceLayout = new QVBoxLayout(workspacePanel);
     workspaceLayout->setContentsMargins(20, 18, 20, 18);
 
-    // SIGNAL CANVAS
-    SignalCanvas *signalCanvas =
-       new SignalCanvas(workspacePanel);
+    // ===========================================================
+    // WORKSPACE CONTENT
+    // ===========================================================
+
+    QSplitter *workspaceSplitter = 
+        new QSplitter(Qt::Vertical, workspacePanel);
     
-    workspaceLayout->addWidget(signalCanvas);    
+    workspaceSplitter->setChildrenCollapsible(false);
+    
+
+    // ============================================================
+    // SIGNAL CANVAS
+    // ============================================================
+
+    SignalCanvas *signalCanvas =
+       new SignalCanvas(workspaceSplitter);
+
+    signalCanvas->setMinimumHeight(180);
+
+    // ============================================================
+    // AMP VISUAL AREA
+    // ============================================================
+
+    QFrame *ampPanel =
+       new QFrame(workspaceSplitter);
+
+    ampPanel->setObjectName("ampPanel");
+    ampPanel->setMinimumHeight(320);
+
+    // ============================================================
+    // SPLITTER SIZE
+    // ============================================================
+
+    // Canvas menor / AMP maior
+    workspaceSplitter->setSizes({220, 420});
+
+    // Mantém a proporção ao redimensionar
+    workspaceSplitter->setStretchFactor(0, 35);
+    workspaceSplitter->setStretchFactor(1, 65);
+    
+    workspaceLayout->addWidget(workspaceSplitter);    
 
     // ---------------------------------------------------------
     // INSPECTOR
@@ -177,6 +213,12 @@ MainWindow::MainWindow(QWidget *parent)
 
         #workspacePanel {
             background-color: #202328;
+        }
+
+        #ampPanel{
+            background-color: #17191d;
+            border: 1px solid #30343b;
+            border-radius: 4px;
         }
 
         #inspectorPanel {
