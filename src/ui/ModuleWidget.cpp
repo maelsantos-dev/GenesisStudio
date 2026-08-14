@@ -98,5 +98,4 @@ void ModuleWidget::mousePressEvent(QMouseEvent *event)
 
         QFrame::mouseMoveEvent(event);
     }
-
-    // Teste 1
+    
