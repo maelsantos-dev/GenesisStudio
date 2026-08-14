@@ -139,21 +139,28 @@ MainWindow::MainWindow(QWidget *parent)
     
     QFrame *ampVisual = new QFrame(ampPanel);
     ampVisual->setObjectName("ampVisual");
-    
-    QVBoxLayout *ampVisualLayout = new QVBoxLayout(ampVisual);
-    ampVisualLayout->setContentsMargins(24, 12, 24, 12);
-    ampVisualLayout->setSpacing(8);
 
+    QVBoxLayout *ampVisualLayout = new QVBoxLayout(ampVisual);
+    ampVisualLayout->setContentsMargins(24, 18, 24, 18);
+    ampVisualLayout->setSpacing(16);
+    
+    
+    // -------------------------------------------------------------------------------
     // Nome do Amplificador
+    // -------------------------------------------------------------------------------
+
     QLabel *ampName = new QLabel("GENESIS LEAD 100");
     ampName->setObjectName("ampName");
     ampName->setAlignment(Qt::AlignCenter);
 
     ampVisualLayout->addWidget(ampName);
 
+    // --------------------------------------------------------------------------------
     // Controles
+    // --------------------------------------------------------------------------------
+
     QHBoxLayout *ampControls = new QHBoxLayout();
-    ampControls->setSpacing(24);
+    ampControls->setSpacing(22);
 
     QStringList controlNames = {
         "GAIN",
@@ -167,18 +174,21 @@ MainWindow::MainWindow(QWidget *parent)
     for (const QString &name : controlNames)
     {
         QVBoxLayout *controlLayout = new QVBoxLayout();
-        controlLayout->setSpacing(4);
+        controlLayout->setSpacing(5);
 
         QLabel *label = new QLabel(name);
+        label->setObjectName("ampControlLabel");
         label->setAlignment(Qt::AlignCenter);
 
         QDial *dial = new QDial();
         dial->setRange(0, 100);
         dial->setValue(50);
         dial->setNotchesVisible(false);
-        dial->setFixedSize(52, 52);
+        dial->setFixedSize(58, 58);
+        dial->setObjectName("ampDial");
 
         QLabel *value = new QLabel("5.0");
+        value->setObjectName("ampControlValue");
         value->setAlignment(Qt::AlignCenter);
 
         connect(dial, &QDial::valueChanged, value,
@@ -196,6 +206,50 @@ MainWindow::MainWindow(QWidget *parent)
 
     ampVisualLayout->addLayout(ampControls);
 
+    // ----------------------------------------------------------------------------
+    // Estilo Visual do Amplificador
+    // ----------------------------------------------------------------------------
+
+ampVisual->setStyleSheet(R"(
+        #ampVisual {
+            background-color: #202631;
+            border: 1px solid #3b4657;
+            border-radius: 10px;
+        }
+
+        #ampName {
+            color: #f1f4f8;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 4px;
+        }
+
+        #ampControlLabel {
+            color: #8995a6;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        #ampControlValue {
+            color: #dce3eb;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        #ampDial {
+            background-color: #303946;
+            border: 2px solid #566274;
+            border-radius: 29px;
+        }
+
+        #ampDial:hover {
+            background-color: #374250;
+            border: 2px solid #708097;
+        }
+    )");
+
+    // Adiciona o AMP ao Painel
     ampLayout->addWidget(ampVisual);
 
     // ============================================================
