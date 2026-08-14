@@ -101,10 +101,10 @@ MainWindow::MainWindow(QWidget *parent)
     // WORKSPACE CONTENT
     // ===========================================================
 
-    QSplitter *workspaceSplitter = 
-        new QSplitter(Qt::Vertical, workspacePanel);
+    // QSplitter *workspaceSplitter = 
+       // new QSplitter(Qt::Vertical, workspacePanel);
     
-    workspaceSplitter->setChildrenCollapsible(false);
+    // workspaceSplitter->setChildrenCollapsible(false);
     
 
     // ============================================================
@@ -112,32 +112,41 @@ MainWindow::MainWindow(QWidget *parent)
     // ============================================================
 
     SignalCanvas *signalCanvas =
-       new SignalCanvas(workspaceSplitter);
+       new SignalCanvas(workspacePanel);
 
-    signalCanvas->setMinimumHeight(180);
+    signalCanvas->setMinimumHeight(160);
 
     // ============================================================
     // AMP VISUAL AREA
     // ============================================================
 
     QFrame *ampPanel =
-       new QFrame(workspaceSplitter);
+       new QFrame(workspacePanel);
 
     ampPanel->setObjectName("ampPanel");
+    // ALTURA FIXA DO AMP
     ampPanel->setMinimumHeight(320);
+    ampPanel->setMaximumHeight(320);
+
+    QVBoxLayout *ampLayout = new QVBoxLayout(ampPanel);
+    ampLayout->setContentsMargins(20, 12, 20, 12);
+    ampLayout->setSpacing(0);
+
+    QLabel *ampImage = new QLabel("AMP");
+    ampImage->setObjectName("ampImage");
+    ampImage->setAlignment(Qt::AlignCenter);
+    ampImage->setMinimumHeight(260);
+
+    ampLayout->addWidget(ampImage);
 
     // ============================================================
-    // SPLITTER SIZE
+    // WORKSPACE LAYOUT
     // ============================================================
 
-    // Canvas menor / AMP maior
-    workspaceSplitter->setSizes({220, 420});
+    workspaceLayout->addWidget(signalCanvas, 1);
+    workspaceLayout->addWidget(ampPanel, 0);
 
-    // Mantém a proporção ao redimensionar
-    workspaceSplitter->setStretchFactor(0, 35);
-    workspaceSplitter->setStretchFactor(1, 65);
-    
-    workspaceLayout->addWidget(workspaceSplitter);    
+        
 
     // ---------------------------------------------------------
     // INSPECTOR
