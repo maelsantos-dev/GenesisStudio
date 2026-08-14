@@ -22,6 +22,12 @@ void SignalCanvas::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
 
+    const int reservedBotton = 390;
+    const int dividerY = height() - reservedBotton;
+
+    painter.setPen(QColor("#343942"));
+    painter.drawLine(0, dividerY, width(), dividerY);
+
     painter.setRenderHint(QPainter::Antialiasing);
 
     // Fundo do Signal Canvas

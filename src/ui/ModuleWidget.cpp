@@ -81,7 +81,9 @@ void ModuleWidget::mousePressEvent(QMouseEvent *event)
                 int minY = 0;
 
                 int maxX = canvas->width() - width();
-                int maxY = canvas->height() - height();
+
+                const int reservedBotton = 390;
+                int maxY = canvas->height() - height() - reservedBotton;
 
                 newPos.setX(qBound(minX, newPos.x(), maxX));
                 newPos.setY(qBound(minY, newPos.y(), maxY));
