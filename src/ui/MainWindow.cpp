@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include "ModuleWidget.h"
 #include "SignalCanvas.h"
+#include "AmpKnob.h"
+
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -180,18 +182,15 @@ MainWindow::MainWindow(QWidget *parent)
         label->setObjectName("ampControlLabel");
         label->setAlignment(Qt::AlignCenter);
 
-        QDial *dial = new QDial();
-        dial->setRange(0, 100);
+        AmpKnob *dial = new AmpKnob();
         dial->setValue(50);
-        dial->setNotchesVisible(false);
-        dial->setFixedSize(58, 58);
         dial->setObjectName("ampDial");
 
         QLabel *value = new QLabel("5.0");
         value->setObjectName("ampControlValue");
         value->setAlignment(Qt::AlignCenter);
 
-        connect(dial, &QDial::valueChanged, value,
+        connect(dial, &AmpKnob::valueChanged, value,
                 [value](int v)
                 {
                     value->setText(QString::number(v / 10.0, 'f', 1));

@@ -19,9 +19,9 @@ signals:
     void valueChanged(int value);
 
 protected:
-    void painEvent(QPainEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMoveEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
    int m_value = 50;

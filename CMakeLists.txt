@@ -5,7 +5,9 @@ project(GenesisStudio VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS)
+set(CMAKE_AUTOMOC ON)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
@@ -17,6 +19,8 @@ add_executable(GenesisStudio
     src/ui/ModuleWidget.cpp
     src/ui/SignalCanvas.h
     src/ui/SignalCanvas.cpp
+    src/ui/AmpKnob.cpp
+    src/ui/AmpKnob.h
 )
 
 target_link_libraries(GenesisStudio
